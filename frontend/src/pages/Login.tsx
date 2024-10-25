@@ -1,47 +1,82 @@
-import { useState } from 'react'
-import { Typography } from '@mui/material';
-import { Container } from '@mui/material';
-import { Button } from '@mui/material'
+import { useState } from 'react';
+import { Button, Box, TextField, Alert, Paper, Typography } from '@mui/material';
+import Grid2 from '@mui/material/Grid2';
+import LockIcon from '@mui/icons-material/Lock';
+import { useNavigate } from 'react-router-dom';
 function Login() {
+    const navigate = useNavigate();
+    const [data, setData] = useState({ name: '', password: '' });
+    const [alert, setAlert] = useState<{ message: string; severity: 'success' | 'error'} | null>(null);
+    const bduser = "tahiche";
+    const bdpasswd = "1234";
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        setAlert(null);
+    
+        if (data.name === bduser && data.password === bdpasswd) {
+            setAlert({ message: 'Credenciales correctas.', severity: 'success' });
+            setTimeout(() => {navigate("/home")}, 2000)
+        } else {
+            setAlert({ message: 'Credenciales incorrectas. Por favor, intente nuevamente.', severity: 'error' });
+        }
+
+        console.log('Datos enviados:', data);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
     return (
-
-        <Container>
-            <header>
-                <Typography variant="h1" sx={{ color: "primary.main", margin: 4 }}>
-                    Página Login de Tahiche Hernández Almeida
-                </Typography>
-            </header>
-
-            <main>
-                <Typography variant="h2" sx={{ color: "secondary.main", margin: 4 }}>
-                    Ejemplo color secundario
-                </Typography>
-                <Typography variant="h3" sx={{ color: "warning.main", margin: 4 }}>
-                    Ejemplo color de advertencia
-                </Typography>
-                <Typography variant="subtitle1" sx={{ color: "error.main", margin: 4, fontWeight: "bold" }}>
-                    Ejemplo color de error
-                </Typography>
-                <Typography variant="body1" sx={{ color: "info.main", margin: 4, fontWeight: "bold" }}>
-                    Ejemplo color de información
-                </Typography>
-                <Typography variant="caption" sx={{ color: "success.main", margin: 4, fontWeight: "bold" }}>
-                    Ejemplo color de éxito
-                </Typography>
-
-                <Button variant="text" sx={{ color: "primary.main", margin: 4 }}>
-                    Botón Principal
-                </Button>
-                <Button variant="contained" sx={{ margin: 4, backgroundColor: "secondary.main", color: "white" }}>
-                    Botón secundario
-                </Button>
-                <Button variant="outlined" sx={{ margin: 4, backgroundColor: "warning.main", color: "white" }}>
-                    Botón terciario
-                </Button>
-            </main>
-        </Container>
+   
+        <Paper elevation={10} square={false} sx={{ textAlign: 'center' }} >
+                 <Typography paddingTop={2} variant = "h5" margin = {2}>Sistema de acceso </Typography>
+                 <LockIcon/>
+        <Box component='form' onSubmit={handleSubmit}>
+ 
+            <Grid2 container spacing={2}>
+                <Grid2 size={12}>
+                    <TextField
+                        required
+                        label='Nombre'
+                        variant='outlined'
+                        fullWidth
+                        name='name'
+                        value={data.name}
+                        onChange={handleChange}
+                    />
+                </Grid2>
+                <Grid2 size={12}>
+                    <TextField
+                        required
+                        label='Contraseña'
+                        variant='outlined'
+                        fullWidth
+                        type='password'
+                        name='password'
+                        value={data.password}
+                        onChange={handleChange}
+                    />
+                </Grid2>
+            </Grid2>
+            <Button variant='contained' fullWidth type='submit' sx={{ mt: 2 }}>
+                Acceder
+            </Button>
+            {alert && (
+                <Alert severity={alert.severity} sx={{ mt: 2 }}>
+                    {alert.message}
+                </Alert>
+            )}
+       
+        </Box>
+        </Paper>
     );
 }
-export default Login
+
+export default Login;
