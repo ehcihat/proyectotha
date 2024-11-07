@@ -3,7 +3,11 @@ import { Button, Box, TextField, Alert, Paper, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Grid2';
 import LockIcon from '@mui/icons-material/Lock';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { authActions } from '../store/authSlice'
 function Login() {
+
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [data, setData] = useState({ name: '', password: '' });
     const [alert, setAlert] = useState<{ message: string; severity: 'success' | 'error'} | null>(null);
@@ -17,7 +21,13 @@ function Login() {
     
         if (data.name === bduser && data.password === bdpasswd) {
             setAlert({ message: 'Credenciales correctas.', severity: 'success' });
-            setTimeout(() => {navigate("/home")}, 2000)
+            setTimeout(() => {
+                dispatch(authActions.login({
+                  name: data.name,
+                  role: 'administrador',
+                }));
+                navigate("/home");
+              }, 2000);
         } else {
             setAlert({ message: 'Credenciales incorrectas. Por favor, intente nuevamente.', severity: 'error' });
         }

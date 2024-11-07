@@ -5,10 +5,9 @@ import './index.css'
 import App from './App.tsx'
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import createTheme from '@mui/material/styles/createTheme'
-import { RouterProvider } from 'react-router-dom'
-import { ThemeOptions } from '@mui/material/styles';
+import { ThemeOptions } from '@mui/material/styles'
 import { Provider } from 'react-redux'
-import { store } from './store/index'
+import { store } from './store/index'  
 
 const customTheme = createTheme({
   palette: {
