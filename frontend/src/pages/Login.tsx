@@ -19,22 +19,41 @@ function Login() {
 
         setAlert(null);
     
-        if (data.name === bduser && data.password === bdpasswd) {
-            setAlert({ message: 'Credenciales correctas.', severity: 'success' });
-            setTimeout(() => {
-                dispatch(authActions.login({
-                  name: data.name,
-                  role: 'administrador',
-                }));
-                navigate("/home");
-              }, 2000);
-        } else {
-            setAlert({ message: 'Credenciales incorrectas. Por favor, intente nuevamente.', severity: 'error' });
+        async function isVerifiedUser () {
+            fetch(`http://localhost:3030/login?user=${data.name}&password=${data.password}`)
+            .then(response => response.json())
+            .then (response => {
+            console.log('Lo que nos llega de la base de datos: ')
+            console.log(response.data)
+            if (response.data.length !== 0){
+                setAlert({ message: 'Credenciales correctas.', severity: 'success' });
+    
+                setTimeout(() => {
+                    dispatch(
+                        authActions.login({
+                            name: data.name,
+                            role: 'administrador',
+                        })
+                    );
+                    navigate('/home');
+                }, 2000);
+            } else{
+                setAlert({
+                    message: 'Credenciales incorrectas. Por favor, intente nuevamente.',
+                    severity: 'error',
+                });
+            }
+           })
+           .catch((error) => {
+            console.error('Error al conectar con el servidor:', error);
+            setAlert({
+                message: 'Error al conectar con el servidor.',
+                severity: 'error',
+            });
+        });
+           }
+           isVerifiedUser();
         }
-
-        console.log('Datos enviados:', data);
-    };
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setData((prevData) => ({
@@ -44,7 +63,7 @@ function Login() {
     };
 
     return (
-   
+  
         <Paper elevation={10} square={false} sx={{ textAlign: 'center' }} >
                  <Typography paddingTop={2} variant = "h5" margin = {2}>Sistema de acceso </Typography>
                  <LockIcon/>
@@ -75,9 +94,10 @@ function Login() {
                     />
                 </Grid2>
             </Grid2>
-            <Button variant='contained' fullWidth type='submit' sx={{ mt: 2 }}>
+            <Button variant='contained' fullWidth type='submit' sx={{ backgroundColor: "primary.main", mt: 2 }}>
                 Acceder
             </Button>
+           
             {alert && (
                 <Alert severity={alert.severity} sx={{ mt: 2 }}>
                     {alert.message}
@@ -86,6 +106,7 @@ function Login() {
        
         </Box>
         </Paper>
+     
     );
 }
 
