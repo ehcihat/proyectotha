@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
 import { useState } from "react";
 import Menu from "../components/Menu";
-function Reports(){
+import UserManager from "../components/UserManager";
+function Manager(){
 
     return (
         <>
         <Menu/>
-
-        <Typography variant="h1">Página Reports Tahiche Hernández Almeida</Typography>
+        <UserManager/>
 
         </>
 
@@ -18,4 +18,4 @@ function Reports(){
 
 };
 
-export default Reports;
+export default Manager;
