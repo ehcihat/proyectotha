@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Tooltip, Drawer, List, ListItem, ListItemText, ListItemIcon, ListItemButton, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import PersonIcon from '@mui/icons-material/Person';
+import AdbIcon from '@mui/icons-material/Adb';
 import HomeIcon from '@mui/icons-material/Home';
-import ReportIcon from '@mui/icons-material/Report';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 import HelpIcon from '@mui/icons-material/Help';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useSelector } from 'react-redux';
@@ -65,18 +65,19 @@ const Menu = () => {
                         </ListItemButton>
                     </ListItem>
                 </Link>
-
+                { userData.userRole === 'admin' ? 
                 <Link to="/reports" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem disablePadding>
                         <ListItemButton sx={customColor}>
                             <ListItemIcon>
-                                <ReportIcon />
+                                <SummarizeIcon />
                             </ListItemIcon>
                             <ListItemText primary="Informes" />
                         </ListItemButton>
                     </ListItem>
+                 
                 </Link>
-
+             : " "}
                 <Link to="/errors" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem disablePadding>
                         <ListItemButton sx={customColor}>
@@ -123,10 +124,10 @@ const Menu = () => {
                             slots={{ transition: Zoom }}>
 
 
-                            {userData.userRole === 'administrador' ? (
+                            {userData.userRole === 'admin' ? (
                                 <AdminPanelSettingsIcon />
                             ) : (
-                                <PersonIcon />
+                                <AdbIcon />
                             )}
                         </Tooltip>
 

@@ -32,7 +32,7 @@ function Login() {
                     dispatch(
                         authActions.login({
                             name: data.name,
-                            role: 'administrador',
+                            role: response.data.rol,
                         })
                     );
                     navigate('/home');

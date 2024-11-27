@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -9,10 +10,12 @@ import Alert from '@mui/material/Alert'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/Delete'
 import { useState } from 'react'
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 
 function Dashboard() {
+    const userData = useSelector((state: RootState) => state.authenticator);
     const [data, setData] = useState({})
     const [alert, setAlert] = useState<{ message: string; severity: 'success' | 'error' } | null>(null)
     const [tableData, setTableData] = useState<itemtype[]>([])
@@ -241,9 +244,11 @@ function Dashboard() {
         tableData.map((row: itemtype) => (
             <TableRow key={row.id}>
                 <TableCell>
+                { userData.userRole === 'admin' ? 
                     <Button onClick={() => handleDeleteItem(row)}>
                         <DeleteForeverIcon sx ={{ color: "secondary.main"}} />
                     </Button>
+                    : ""}
                 </TableCell>
                 <TableCell>{row.nombre}</TableCell>
                 <TableCell>{row.marca}</TableCell>
