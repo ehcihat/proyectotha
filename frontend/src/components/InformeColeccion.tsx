@@ -48,14 +48,14 @@ function InformeColeccion({ datos }: InformeColeccionProps) {
                     {
                         label: "Exportar a PDF",
                         exportFunc: (cols, datas) => {
-                            // Añadir el total a la fila de datos antes de exportar
+                     
                             const totalRow = {
                                 nombre: "Total",
                                 marca: "",
                                 tipo: "",
                                 precio: totalPrecio
                             };
-                            // Agregar la fila del total al final de los datos
+                      
                             const newData = [...datas, totalRow];
                             return ExportPdf(cols, newData, "informe_coleccion.pdf");
                         },
@@ -63,14 +63,14 @@ function InformeColeccion({ datos }: InformeColeccionProps) {
                     {
                         label: "Exportar a CSV",
                         exportFunc: (cols, datas) => {
-                            // Añadir el total a la fila de datos antes de exportar
+            
                             const totalRow = {
                                 nombre: "Total",
                                 marca: "",
                                 tipo: "",
                                 precio: totalPrecio
                             };
-                            // Agregar la fila del total al final de los datos
+                  
                             const newData = [...datas, totalRow];
                             return ExportCsv(cols, newData, "informe_coleccion.csv");
                         },
