@@ -78,7 +78,7 @@ const Menu = () => {
                  
                 </Link>
              : " "}
-                <Link to="../public/UserManual.pdf" target="_blank" style={{ textDecoration: 'none', color: 'black' }}>
+                <Link to="/UserManual.pdf" target="_blank" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem disablePadding>
                         <ListItemButton sx={customColor}>
                             <ListItemIcon>

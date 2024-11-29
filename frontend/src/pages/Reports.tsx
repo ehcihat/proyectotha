@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Tooltip, Typography } from "@mui/material";
 import { useState } from "react";
 import Menu from "../components/Menu";
 import InformeColeccion from "../components/InformeColeccion";
@@ -31,6 +31,7 @@ function Reports() {
     return (
         <>
             <Menu />
+            <Tooltip title="Generar informe de colección" placement="bottom" arrow>
             {!mostrarInforme && (
             <Button
                 onClick={handleInformeClick}
@@ -38,7 +39,7 @@ function Reports() {
                 variant="contained"
                 sx={{ marginRight: 1, backgroundColor: "primary.main",  color: "white", }} > INFORME COLECCIÓN </Button>
             )}
-
+            </Tooltip>
             {mostrarInforme && <InformeColeccion datos={datosColeccion} />}
         </>
     );
