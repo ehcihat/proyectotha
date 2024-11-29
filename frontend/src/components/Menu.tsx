@@ -78,7 +78,7 @@ const Menu = () => {
                  
                 </Link>
              : " "}
-                <Link to="/errors" style={{ textDecoration: 'none', color: 'black' }}>
+                <Link to="../public/UserManual.pdf" target="_blank" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem disablePadding>
                         <ListItemButton sx={customColor}>
                             <ListItemIcon>
@@ -107,6 +107,7 @@ const Menu = () => {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="fixed" sx={{ backgroundColor: "primary.main", pl: 5, pr: 5 }}>
                     <Toolbar >
+                    <Tooltip title = "Menú" placement = "bottom" arrow>
                         <IconButton
                             size="large"
                             edge="start"
@@ -117,11 +118,12 @@ const Menu = () => {
                         >
                             <MenuIcon />
                         </IconButton>
+                        </Tooltip>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1, }}>
                             {userData.userName}
                         </Typography>
-                        <Tooltip title={userData.userRole === 'administrador' ? 'Admin' : 'Usuario'}
-                            slots={{ transition: Zoom }}>
+                        <Tooltip title={userData.userRole === 'admin' ? 'Admin' : 'Usuario'}
+                            slots={{ transition: Zoom }}  placement = "bottom" arrow>
 
 
                             {userData.userRole === 'admin' ? (

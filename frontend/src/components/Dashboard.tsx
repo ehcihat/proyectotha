@@ -7,7 +7,7 @@ import Grid2 from '@mui/material/Grid2'
 import TextField from '@mui/material/TextField'
 import Container from '@mui/material/Container'
 import Alert from '@mui/material/Alert'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/Delete'
 import { useState } from 'react'
 import { useSelector } from 'react-redux';
@@ -109,7 +109,7 @@ function Dashboard() {
         insertData()
     }
 
-     const handleDeleteItem = async (row: itemtype) => {
+    const handleDeleteItem = async (row: itemtype) => {
         if (row.id === undefined) {
             setAlert({ message: 'ID no válido.', severity: 'error' });
             return;
@@ -147,12 +147,12 @@ function Dashboard() {
         }
     };
 
-  
+
     useEffect(() => {
         fetchData();
     }, []);
 
-    
+
     return (
         <Container>
             <Paper elevation={10} square={false} sx={{ textAlign: 'center' }} >
@@ -211,8 +211,12 @@ function Dashboard() {
                         </Grid2>
 
                         <Grid2 size={12} sx={{ padding: 2 }}>
-                            <Button type="submit" color='primary' variant='contained' sx={{ marginRight: 1 }}>Insertar Datos</Button>
-                            <Button type="button" color='secondary' variant='outlined' onClick={handleClear}>Limpiar</Button>
+                            <Tooltip title="Insertar datos" placement="bottom" arrow>
+                                <Button type="submit" color='primary' variant='contained' sx={{ marginRight: 1 }}>Insertar Datos</Button>
+                            </Tooltip>
+                            <Tooltip title="Limpiar campos" placement="bottom" arrow>
+                                <Button type="button" color='secondary' variant='outlined' onClick={handleClear}>Limpiar</Button>
+                            </Tooltip>
                             {alert && (
                                 <Alert severity={alert.severity} sx={{ mt: 2 }}>
                                     {alert.message}
@@ -222,46 +226,52 @@ function Dashboard() {
                     </Grid2>
                 </Box>
             </Paper>
-            <TableContainer 
-               component={Paper}
-               sx={{
-                   maxHeight: 400, 
-                   overflowY: 'auto',
-                   marginTop: 2, 
-               }}
-           >
+            <TableContainer
+                component={Paper}
+                sx={{
+                    maxHeight: 400,
+                    overflowY: 'auto',
+                    marginTop: 2,
+                }}
+            >
 
                 <Table aria-label='Tabla de Items'>
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
-   
+
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-    {tableData.length > 0 ? (
-        tableData.map((row: itemtype) => (
-            <TableRow key={row.id}>
-                <TableCell>
-                { userData.userRole === 'admin' ? 
-                    <Button onClick={() => handleDeleteItem(row)}>
-                        <DeleteForeverIcon sx ={{ color: "secondary.main"}} />
-                    </Button>
-                    : ""}
-                </TableCell>
-                <TableCell>{row.nombre}</TableCell>
-                <TableCell>{row.marca}</TableCell>
-                <TableCell>{row.tipo}</TableCell>
-                <TableCell>{row.precio}</TableCell>
-            </TableRow>
-        ))
-    ) : (
-        <TableRow>
-            <TableCell colSpan={5}>Sin datos</TableCell>
-        </TableRow>
-    )}
-</TableBody>
+                        {tableData.length > 0 ? (
+                            tableData.map((row: itemtype) => (
+                                <TableRow key={row.id}>
+
+                                    <TableCell>
+
+                                        {userData.userRole === 'admin' ?
+                                            <Button onClick={() => handleDeleteItem(row)}>
+                                                <Tooltip title="Eliminar registro" placement="top" arrow>
+                                                    <DeleteForeverIcon sx={{ color: "secondary.main" }} />
+                                                </Tooltip>
+                                            </Button>
+                                            : ""}
+
+                                    </TableCell>
+
+                                    <TableCell>{row.nombre}</TableCell>
+                                    <TableCell>{row.marca}</TableCell>
+                                    <TableCell>{row.tipo}</TableCell>
+                                    <TableCell>{row.precio}</TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={5}>Sin datos</TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
                 </Table>
 
             </TableContainer>
