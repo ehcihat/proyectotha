@@ -9,7 +9,7 @@ function Login() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [data, setData] = useState({ name: '', password: '', rol: ''});
+    const [data, setData] = useState({ name: '', password: '' });
     const [alert, setAlert] = useState<{ message: string; severity: 'success' | 'error'} | null>(null);
     const bduser = "tahiche";
     const bdpasswd = "1234";
@@ -25,7 +25,6 @@ function Login() {
             .then (response => {
             console.log('Lo que nos llega de la base de datos: ')
             console.log(response.data)
-            console
             if (response.data.length !== 0){
                 setAlert({ message: 'Credenciales correctas.', severity: 'success' });
     
@@ -35,10 +34,7 @@ function Login() {
                             name: data.name,
                             role: response.data.rol,
                         })
-                        
                     );
-                    console.log("ROL:")
-                    console.log(response.data.rol)
                     navigate('/home');
                 }, 2000);
             } else{

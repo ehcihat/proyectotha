@@ -5,12 +5,10 @@ import { useState } from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Tooltip, Drawer, List, ListItem, ListItemText, ListItemIcon, ListItemButton, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import PersonIcon from '@mui/icons-material/Person';
-import HomeIcon from '@mui/icons-material/Home';
-import ReportIcon from '@mui/icons-material/Report';
-import HelpIcon from '@mui/icons-material/Help';
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import AdbIcon from '@mui/icons-material/Adb';
+import HomeIcon from '@mui/icons-material/Home';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import HelpIcon from '@mui/icons-material/Help';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -67,20 +65,20 @@ const Menu = () => {
                         </ListItemButton>
                     </ListItem>
                 </Link>
-                { userData.userRole === 'administrador' ? 
+                { userData.userRole === 'admin' ? 
                 <Link to="/reports" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem disablePadding>
                         <ListItemButton sx={customColor}>
                             <ListItemIcon>
-                                <ReportIcon />
+                                <SummarizeIcon />
                             </ListItemIcon>
                             <ListItemText primary="Informes" />
                         </ListItemButton>
                     </ListItem>
+                 
                 </Link>
-                : ""}
-
-                <Link to="/errors" style={{ textDecoration: 'none', color: 'black' }}>
+             : " "}
+                <Link to="/UserManual.pdf" target="_blank" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem disablePadding>
                         <ListItemButton sx={customColor}>
                             <ListItemIcon>
@@ -90,18 +88,6 @@ const Menu = () => {
                         </ListItemButton>
                     </ListItem>
                 </Link>
-                { userData.userRole === 'admin' ? 
-                <Link to="/manager" style={{ textDecoration: 'none', color: 'black' }}>
-                    <ListItem disablePadding>
-                        <ListItemButton sx={customColor}>
-                            <ListItemIcon>
-                                <PersonIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Gestión de Usuarios" />
-                        </ListItemButton>
-                    </ListItem>
-                </Link>
-                    : ""}
 
 
                 <ListItem disablePadding>
@@ -121,6 +107,7 @@ const Menu = () => {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="fixed" sx={{ backgroundColor: "primary.main", pl: 5, pr: 5 }}>
                     <Toolbar >
+                    <Tooltip title = "Menú" placement = "bottom" arrow>
                         <IconButton
                             size="large"
                             edge="start"
@@ -131,20 +118,19 @@ const Menu = () => {
                         >
                             <MenuIcon />
                         </IconButton>
+                        </Tooltip>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1, }}>
                             {userData.userName}
                         </Typography>
                         <Tooltip title={userData.userRole === 'admin' ? 'Admin' : 'Usuario'}
-                            slots={{ transition: Zoom }}>
+                            slots={{ transition: Zoom }}  placement = "bottom" arrow>
 
-                                
+
                             {userData.userRole === 'admin' ? (
                                 <AdminPanelSettingsIcon />
                             ) : (
                                 <AdbIcon />
-                          
                             )}
-                            
                         </Tooltip>
 
                     </Toolbar>
